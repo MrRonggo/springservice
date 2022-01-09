@@ -30,3 +30,6 @@ Repo about springboot that is use for learning
     
     to your **_pom.xml_** in dependency section
 - When your app is already running you can access it via your browser with the default url [**localhost:8080**](http://localhost:8080/)
+
+## References
+1. [Spring Boot Tutorial | Full Course [2021] [NEW]](https://youtu.be/9SGDpanrc8U)
