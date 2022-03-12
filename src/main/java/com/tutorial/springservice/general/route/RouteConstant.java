@@ -1,4 +1,4 @@
-package com.tutorial.springservice.constant;
+package com.tutorial.springservice.general.route;
 
 public class RouteConstant {
     public static final String HELLO = "hello";

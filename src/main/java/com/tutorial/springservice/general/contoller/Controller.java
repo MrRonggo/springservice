@@ -1,21 +1,25 @@
-package com.tutorial.springservice.controller;
+package com.tutorial.springservice.general.contoller;
 
+import com.tutorial.springservice.general.route.RouteConstant;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.tutorial.springservice.constant.RouteConstant.*;
-
 @RestController
 public class Controller {
 
-    @GetMapping(value = HELLO)
+    @GetMapping
+    public String welcome() {
+        return "Welcome!";
+    }
+
+    @GetMapping(value = RouteConstant.HELLO)
     public String hello() {
         return "Hello World!";
     }
 
-    @GetMapping(value = HELLO_LIST)
+    @GetMapping(value = RouteConstant.HELLO_LIST)
     public List<String> helloList() {
         return List.of("Hello", "World!");
     }

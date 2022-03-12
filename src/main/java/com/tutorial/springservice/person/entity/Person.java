@@ -1,4 +1,4 @@
-package com.tutorial.springservice.entity;
+package com.tutorial.springservice.person.entity;
 
 import lombok.Builder;
 import lombok.Data;
