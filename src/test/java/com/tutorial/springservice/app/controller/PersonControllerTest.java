@@ -1,6 +1,9 @@
 package com.tutorial.springservice.app.controller;
 
+import com.tutorial.springservice.app.presenterImpl.ObjectPresenterImpl;
 import com.tutorial.springservice.core.gateway.PersonGateway;
+import com.tutorial.springservice.core.request.PersonCreateRequest;
+import com.tutorial.springservice.core.service.PersonCreate;
 import com.tutorial.springservice.persistence.entity.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +23,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,13 +39,15 @@ public class PersonControllerTest {
 
     @Mock
     PersonGateway gateway;
+    @Mock
+    PersonCreate createService;
 
     PersonController controller;
     MockHttpServletRequest request;
 
     @BeforeEach
     void setUp() {
-        controller = new PersonController(gateway);
+        controller = new PersonController(gateway, createService);
         request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
     }
@@ -104,27 +109,6 @@ public class PersonControllerTest {
     }
 
     @Test
-    public void create() throws Exception {
-        Person expected = constructPerson();
-        when(gateway.save(any(Person.class))).thenReturn(expected);
-
-        Person expectedArgument = constructPerson();
-        expectedArgument.setId(null);
-
-        Person result = controller.create(request, expectedArgument);
-
-        ArgumentCaptor<Person> captor = ArgumentCaptor.forClass(Person.class);
-        verify(gateway, times(INVOCATION)).save(captor.capture());
-        Person argument = captor.getValue();
-
-        assertNull(argument.getId());
-        assertEquals(FIRSTNAME, argument.getFirstName());
-        assertEquals(DATE_OF_BIRTH, argument.getDateOfBirth());
-        assertNotEquals(argument.getId(), result.getId());
-        assertEquals(expected, result);
-    }
-
-    @Test
     public void update() throws Exception {
         Person expected = constructPerson();
         when(gateway.update(any(Person.class))).thenReturn(expected);
@@ -137,6 +121,24 @@ public class PersonControllerTest {
 
         assertEquals(expected,argument);
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void create() throws Exception {
+        PersonCreateRequest body = PersonCreateRequest.builder()
+                .firstName(FIRSTNAME)
+                .dateOfBirth(DATE_OF_BIRTH)
+                .build();
+
+        Person result = controller.create(request, body);
+
+        ArgumentCaptor<PersonCreateRequest> bodyCaptor = ArgumentCaptor.forClass(PersonCreateRequest.class);
+        verify(createService, times(INVOCATION)).serve(bodyCaptor.capture(), any(ObjectPresenterImpl.class));
+        PersonCreateRequest argument = bodyCaptor.getValue();
+
+        assertEquals(FIRSTNAME, argument.getFirstName());
+        assertEquals(DATE_OF_BIRTH, argument.getDateOfBirth());
+        assertNull(result);
     }
 }
 

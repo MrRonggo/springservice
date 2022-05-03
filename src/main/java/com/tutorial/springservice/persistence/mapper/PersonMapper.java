@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "person")
 public class PersonMapper {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
