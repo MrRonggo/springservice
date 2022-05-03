@@ -31,5 +31,13 @@ Repo about springboot that is use for learning
     to your **_pom.xml_** in dependency section
 - When your app is already running you can access it via your browser with the default url [**localhost:8080**](http://localhost:8080/)
 
+#### 3. Setup your database (MySql)
+- To use MySql first you must install the MySql itself
+- To install MySql you can follow the instruction [here](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04) and you ca check if it was install by running `mysql --version` command
+- The default access to your MySql usually at root@localhost with 3306 port, however if you try to connect to it using intellij or other software it won't connect
+- To be able to connect to your database you have to set your password for your database, you can follow [this](https://youtu.be/HqcEKJHu_dU) video on how to do that
+
 ## References
 1. [Spring Boot Tutorial | Full Course [2021] [NEW]](https://youtu.be/9SGDpanrc8U)
+2. [How To Install MySQL on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04)
+3. [Install MYSQL 8.0.26 di Linux Ubuntu 20.04 dan Perbaikan Koneksi Localhost](https://youtu.be/HqcEKJHu_dU)

@@ -8,6 +8,6 @@ class SpringServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
+		SpringServiceApplication.main(new String[] {});
 	}
-
 }

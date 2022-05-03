@@ -1,0 +1,17 @@
+MySql root pass = 12345678
+
+Installation done in linux mint:
+1. `sudo apt install mysql-server -y`
+2. `sudo mysql_secure_installation`
+3. proceed insert your password for root and you can pick yes for the rest of it
+4. alter the user so it can be access using DB manager like dbeaver with
+    ALTER USER `root`@`localhost` IDENTIFIED WITH mysql_native_password BY '12345678'
+5. if you want to allow your mySql through the fire wall use `sudo ufw allow mysql`
+
+In case you fogot your password and don't know what to do try re-installing it
+with the instruction below
+1. Make sure MySQL is not running with              : `sudo systemctl stop mysql`
+2. Then purge all of the MySQL packages             : `sudo apt purge mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-*`
+3. Then delete all of the MySQL files               : `sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql`
+4. Finally clean all packages that are not needed   : `sudo apt autoremove`
+5. List item                                        : `sudo apt autoclean`
